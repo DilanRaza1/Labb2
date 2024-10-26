@@ -10,7 +10,6 @@ namespace Labb2
     {
         public string Name { get; set; }
         public string Password { get; set; }
-
         public List<Produkt> Cart { get; set; }
         public Kund(string name, string password)
         {
@@ -18,6 +17,11 @@ namespace Labb2
             Password = password;
             Cart = new List<Produkt>();
 
+        }
+
+        public override string ToString()
+        {
+            return $"Customer Name: {Name}\nPassword: {Password}\nItems in Cart: {Cart.Count}";
         }
 
     }

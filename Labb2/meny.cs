@@ -46,9 +46,6 @@ namespace Labb2
                         else
                         {
                             Console.Clear();
-                            Console.WriteLine("Wrong username or password");
-                            Thread.Sleep(1000);
-                            Console.Clear();
                             break;
                         }
 
@@ -100,11 +97,12 @@ namespace Labb2
                 Console.WriteLine("4. Go to checkout");
                 Console.WriteLine("5. Customer info");
                 Console.WriteLine("6. Exit");
+                Console.WriteLine("7. Logout");
                 Console.WriteLine("\r\nChoose an option: ");
 
                 ConsoleKeyInfo userChoice = Console.ReadKey();
 
-                if (userChoice.Key != ConsoleKey.D1 || userChoice.Key != ConsoleKey.D2 || userChoice.Key != ConsoleKey.D3 || userChoice.Key != ConsoleKey.D4 || userChoice.Key != ConsoleKey.D5 || userChoice.Key != ConsoleKey.D6)
+                if (userChoice.Key != ConsoleKey.D1 || userChoice.Key != ConsoleKey.D2 || userChoice.Key != ConsoleKey.D3 || userChoice.Key != ConsoleKey.D4 || userChoice.Key != ConsoleKey.D5 || userChoice.Key != ConsoleKey.D6 || userChoice.Key != ConsoleKey.D7)
                 {
                     Console.Clear();
                 }
@@ -157,6 +155,12 @@ namespace Labb2
                         Console.Clear();
                         Console.WriteLine("Exiting program");
                         Environment.Exit(0);
+                        break;
+
+                        case ConsoleKey.D7:
+                        case ConsoleKey.NumPad7:
+                        Console.Clear();
+                        manager.Logout();
                         break;
                 }
 

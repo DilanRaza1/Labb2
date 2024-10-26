@@ -15,7 +15,10 @@ namespace Labb2
         public Manager()
         {
             kundLista = new List<Kund>();
-
+            
+            kundLista.Add(new Kund("Knatte", "password1"));
+            kundLista.Add(new Kund("Fnatte", "password2"));
+            kundLista.Add(new Kund("Tjatte", "password3"));
         }
 
         public bool createUser()
@@ -63,17 +66,17 @@ namespace Labb2
 
         public void showCustomers()
         {
+            Console.WriteLine("All Customers:");
+            Console.WriteLine("-------------");
+
             foreach (Kund newKund in kundLista)
             {
-                Console.WriteLine($"{newKund.Name} ");
-                Thread.Sleep(1500);
-                Console.WriteLine("\n\nPress Any key To Continue");
-                Console.ReadKey();
-                
-                Console.Clear();
-
+                Console.WriteLine($"- {newKund.Name}");
             }
 
+            Console.WriteLine("\nPress Any Key To Continue...");
+            Console.ReadKey();
+            Console.Clear();
         }
 
 
@@ -84,31 +87,38 @@ namespace Labb2
             Console.WriteLine("Enter password: ");
             string password = Console.ReadLine();
 
-            foreach (Kund newKund in kundLista)
+            Kund matchedKund = kundLista.FirstOrDefault(k => k.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+            if (matchedKund != null && matchedKund.Password == password)
             {
-                if (newKund == kundLista.FirstOrDefault(k => k.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
-                {
-                    loggedinKund = new Kund(name, password);
-                    Console.Clear();
-                    Console.WriteLine("You are logged in");
-                    Thread.Sleep(1000);
-                    Console.Clear();
-                    isloggedIn = true;
-                    return isloggedIn;
-
-                }
+                loggedinKund = matchedKund;
+                Console.Clear();
+                Console.WriteLine("You are logged in");
+                Thread.Sleep(1000);
+                Console.Clear();
+                isloggedIn = true;
+                return true;
             }
-
-            return isloggedIn;
+            else
+            {
+                Console.Clear();    
+                Console.WriteLine("Invalid username or password");
+                Thread.Sleep(1000);
+                Console.Clear();
+                return false;
+            }
         }
 
         public bool IsLoggedIn()
         {
             while (isloggedIn)
             {
-                meny.loggedinMeny(loggedinKund);
+                if (!meny.loggedinMeny(loggedinKund))  
+                {
+                    return false;
+                }
             }
-            return true;
+            return false;
         }
 
 
@@ -192,18 +202,25 @@ namespace Labb2
 
         public void ShowCustomerInfo(Kund kund)
         {
-            Console.WriteLine($"Name: {kund.Name}");
-            Console.WriteLine($"Cart: {kund.Cart.Count} items");
+            Console.WriteLine(kund.ToString());
             Thread.Sleep(1000);
             Console.WriteLine("\n\nPress Any Key To Return To The Menu..");
             Console.ReadKey();
             Console.Clear();
-            
-
-
         }
 
-     
+        public void Logout()
+        {
+            isloggedIn = false;
+            loggedinKund = null;
+            Console.Clear();
+            Console.WriteLine("You have been logged out");
+            Thread.Sleep(1000);
+            Console.Clear();
+            meny.MainMeny();
+        }
+
+
     }
 }
 
